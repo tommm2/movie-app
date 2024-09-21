@@ -1,22 +1,31 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-const inter = Inter({ subsets: ["latin"] });
+import Header from '@/components/containers/header';
+import { AuthContextProvider } from '@/context/auth-context';
+
+import './globals.css';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Movie App",
-  description: "Happy watching movie !!",
+	title: 'Movie App',
+	description: 'Happy watching movie !!',
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="zh-TW">
-      <body className={inter.className}>{children}</body>
-    </html>
-  );
+	return (
+		<html lang='en'>
+			<body className={inter.className}>
+				<AuthContextProvider>
+					<Header />
+					{children}
+				</AuthContextProvider>
+			</body>
+		</html>
+	);
 }
