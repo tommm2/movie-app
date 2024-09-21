@@ -1,7 +1,6 @@
 'use client';
 
 import { type User, onAuthStateChanged } from 'firebase/auth';
-import { GoogleAuthProvider } from 'firebase/auth/web-extension';
 import {
 	ReactNode,
 	createContext,
