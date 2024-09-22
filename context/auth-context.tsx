@@ -1,7 +1,6 @@
 'use client';
 
 import { type User, onAuthStateChanged } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
 import {
 	ReactNode,
 	createContext,
@@ -31,13 +30,14 @@ interface AuthContextProviderProps {
 export function AuthContextProvider({ children }: AuthContextProviderProps) {
 	const [user, setUser] = useState<User | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
-	const router = useRouter();
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (user) => {
 			setUser(user);
 			setIsLoading(false);
 		});
+
+		return () => unsubscribe();
 	}, []);
 
 	return (
