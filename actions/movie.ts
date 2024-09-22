@@ -17,3 +17,16 @@ export const getMovies = async (page = 1, limit = 10) => {
 		throw new Error(`An error happened: ${error}`)
 	}
 }
+
+export const getMovieDetail = async (id: number) => {
+	try {
+		const url = `${BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=credits`;
+		const res = await fetch(url);
+
+		const result = await res.json();
+
+		return result;
+	} catch (error) {
+		throw new Error(`An error happened: ${error}`)
+	}
+}
