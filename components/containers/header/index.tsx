@@ -14,9 +14,9 @@ import SignInDialog from './sign-in-modal';
 import UserDropdown from './user-dropdown';
 
 export default function Header() {
-	const user = useAuth();
+	const { user, isLoading } = useAuth();
 
-	const handleClickGoogleSignIn = async () => {
+	const handleSignInWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 
 		await signInWithPopup(auth, provider)
@@ -39,20 +39,9 @@ export default function Header() {
 				</Link>
 			</nav>
 
-			<div className='flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4'>
-				<form className='ml-auto flex-1 sm:flex-initial'>
-					<div className='relative'>
-						<Search className='absolute left-2.5 top-2.5 size-4 text-muted-foreground' />
-						<Input
-							type='search'
-							placeholder='Search movies...'
-							className='pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]'
-						/>
-					</div>
-				</form>
-
-				{!user && (
-					<SignInDialog onClickGoogleSignIn={handleClickGoogleSignIn} />
+			<div className='flex w-full items-center justify-end gap-4 md:gap-2'>
+				{isLoading ? null : !user && (
+					<SignInDialog onSignInWithGoogle={handleSignInWithGoogle} />
 				)}
 
 				<UserDropdown

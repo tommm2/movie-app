@@ -11,11 +11,11 @@ import {
 } from '@/components/ui/dialog';
 
 interface SignInDialogProps {
-	onClickGoogleSignIn: () => {};
+	onSignInWithGoogle: () => {};
 }
 
 export default function SignInDialog({
-	onClickGoogleSignIn,
+	onSignInWithGoogle,
 }: SignInDialogProps) {
 	return (
 		<Dialog>
@@ -32,7 +32,7 @@ export default function SignInDialog({
 				<div className='flex items-center space-x-2'>
 					<Button
 						className='w-full px-3'
-						onClick={onClickGoogleSignIn}
+						onClick={onSignInWithGoogle}
 					>
 						Sign in with google
 					</Button>
