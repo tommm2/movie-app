@@ -5,10 +5,10 @@ import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { useAuth } from '@/context/auth-context';
 import { auth } from '@/lib/firebase';
 
-import UserDropdown from './header/user-dropdown';
 import MobileNav from './mobile-nav';
 import Nav from './nav';
 import SignInDialog from './sign-in-modal';
+import UserDropdown from './user-dropdown';
 
 export default function Header() {
 	const { user, isLoading } = useAuth();
