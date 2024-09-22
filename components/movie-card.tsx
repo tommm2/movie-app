@@ -25,7 +25,6 @@ export default function MovieCard({ id, title, posterPath }: MovieCardProps) {
 			className='group relative cursor-pointer'
 			onClick={handleClick}
 		>
-			{id}
 			<Image
 				src={`https://image.tmdb.org/t/p/original/${posterPath}`}
 				alt={title}
