@@ -10,14 +10,14 @@ interface ProtectedRouteProps {
 }
 
 export default function ProtectedRoute({ children }: ProtectedRouteProps) {
-	const user = useAuth();
+	const { user, isLoading } = useAuth();
 	const router = useRouter();
 
 	useEffect(() => {
-		if (!user) {
+		if (!isLoading && !user) {
 			router.push('/');
 		}
-	}, [user, router]);
+	}, [user, router, isLoading]);
 
 	return user ? children : null;
 }
