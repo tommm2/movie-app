@@ -1,3 +1,4 @@
+import { type Metadata } from 'next';
 import Image from 'next/image';
 
 import { getMovieDetail } from '@/actions/movie';
@@ -6,6 +7,28 @@ import type { Credits, Genre } from '@/types/movie';
 interface DetailProps {
 	params: { id: number };
 }
+
+export const generateMetadata = async ({
+	params,
+}: DetailProps): Promise<Metadata | undefined> => {
+	const detail = await getMovieDetail(params.id);
+
+	if (!detail) {
+		return;
+	}
+
+	const { title, overview } = detail;
+
+	return {
+		title,
+		description: overview,
+		openGraph: {
+			type: 'video.movie',
+			title,
+			description: overview,
+		},
+	};
+};
 
 export default async function Detail({ params }: DetailProps) {
 	const detail = await getMovieDetail(params.id);
@@ -21,12 +44,13 @@ export default async function Detail({ params }: DetailProps) {
 		credits = {},
 	} = detail;
 
-	const director = (credits as Credits).crew
-		.find((crew) => crew.job === 'Director')
+	const director = (credits as Credits).crew.find(
+		(crew) => crew.job === 'Director',
+	);
 
 	const topFivePopularCast = (credits as Credits).cast
-			.sort((a, b) => b.popularity - a.popularity)
-			.slice(0, 5);
+		.sort((a, b) => b.popularity - a.popularity)
+		.slice(0, 5);
 
 	return (
 		<main className='mx-auto max-w-[90rem] px-4 py-8'>

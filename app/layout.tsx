@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import Header from '@/components/containers/header';
+import Header from '@/components/header';
 import { AuthContextProvider } from '@/context/auth-context';
 
 import './globals.css';
@@ -9,7 +9,15 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Movie App',
+	title: {
+		default: 'Moviez',
+		template: '%s - Moviez',
+	},
+	openGraph: {
+		type: 'video.movie',
+		siteName: 'Moviez',
+		title: 'Moviez',
+	},
 	description: 'Happy watching movie !!',
 };
 
