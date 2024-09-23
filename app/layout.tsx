@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
 import Header from '@/components/header';
+import { Toaster } from '@/components/ui/toaster';
 import { AuthContextProvider } from '@/context/auth-context';
 
 import './globals.css';
@@ -31,7 +32,9 @@ export default function RootLayout({
 			<body className={inter.className}>
 				<AuthContextProvider>
 					<Header />
-					{children}
+					<main className='mx-auto max-w-[90rem] p-4 pt-8'>{children}</main>
+
+					<Toaster />
 				</AuthContextProvider>
 			</body>
 		</html>
