@@ -53,7 +53,7 @@ export default async function Detail({ params }: DetailProps) {
 		.slice(0, 5);
 
 	return (
-		<main className='mx-auto max-w-[90rem] px-4 py-8'>
+		<>
 			<div className='flex flex-col gap-4 md:flex-row'>
 				<div className='flex-1'>
 					<Image
@@ -109,6 +109,6 @@ export default async function Detail({ params }: DetailProps) {
 					</div>
 				</div>
 			</div>
-		</main>
+		</>
 	);
 }
