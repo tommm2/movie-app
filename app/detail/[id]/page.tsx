@@ -35,7 +35,7 @@ export const generateMetadata = async ({
 export default async function Detail({ params }: DetailProps) {
 	const data = await getMovieDetail(params.id);
 
-	if (!data.success) {
+	if (!data.id) {
 		return notFound();
 	}
 
