@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 		template: '%s - Moviez',
 	},
 	openGraph: {
-		type: 'video.movie',
+		type: 'website',
 		siteName: 'Moviez',
 		title: 'Moviez',
 	},
@@ -33,7 +33,6 @@ export default function RootLayout({
 				<AuthContextProvider>
 					<Header />
 					<main className='mx-auto max-w-[90rem] p-4 pt-8'>{children}</main>
-
 					<Toaster />
 				</AuthContextProvider>
 			</body>
