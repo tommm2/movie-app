@@ -7,6 +7,7 @@ import MovieCard from '@/components/movie-card';
 import ProtectedRoute from '@/components/protected-route';
 import { useAuth } from '@/context/auth-context';
 import { db } from '@/lib/firebase';
+import { Movie } from '@/types/movie';
 
 export default function Watchlist() {
 	const { user } = useAuth();
@@ -32,19 +33,22 @@ export default function Watchlist() {
 
 	return (
 		<ProtectedRoute>
-			<h1 className='mb-4 text-2xl font-bold'>Watchlist</h1>
-			<div className='grid grid-cols-1 gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-4'>
-				{watchlist.map((item: any) => {
-					return (
-						<MovieCard
-							key={item.id}
-							id={item.id}
-							title={item.title}
-							posterPath={item.posterPath}
-						/>
-					);
-				})}
-			</div>
+			<main className='mx-auto max-w-[90rem] p-4 pt-8'>
+				<h1 className='mb-4 flex items-center gap-2 text-3xl font-bold'>
+					Watchlist
+				</h1>
+
+				<div className='grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+					{watchlist.map((item: Movie) => {
+						return (
+							<MovieCard
+								key={item.id}
+								movie={item}
+							/>
+						);
+					})}
+				</div>
+			</main>
 		</ProtectedRoute>
 	);
 }
