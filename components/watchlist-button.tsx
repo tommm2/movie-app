@@ -84,6 +84,8 @@ export default function WatchlistButton({ data, className }: MovieCardProps) {
 				const inWatchlist = await checkIfInWatchlist();
 
 				setIsInWatchlist(inWatchlist);
+			} else {
+				setIsInWatchlist(false);
 			}
 		};
 
