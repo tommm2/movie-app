@@ -38,16 +38,20 @@ export default function Watchlist() {
 					Watchlist
 				</h1>
 
-				<div className='grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-					{watchlist.map((item: Movie) => {
-						return (
-							<MovieCard
-								key={item.id}
-								movie={item}
-							/>
-						);
-					})}
-				</div>
+				{watchlist.length > 0 ? (
+					<div className='grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+						{watchlist.map((item: Movie) => {
+							return (
+								<MovieCard
+									key={item.id}
+									movie={item}
+								/>
+							);
+						})}
+					</div>
+				) : (
+					<p className='text-center'>No movies in your watchlist</p>
+				)}
 			</main>
 		</ProtectedRoute>
 	);
