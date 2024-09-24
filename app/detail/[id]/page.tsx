@@ -1,7 +1,9 @@
 import { type Metadata } from 'next';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 import { getMovieDetail } from '@/actions/movie';
+import WatchlistButton from '@/components/watchlist-button';
 import type { Credits, Genre } from '@/types/movie';
 
 interface DetailProps {
@@ -11,13 +13,13 @@ interface DetailProps {
 export const generateMetadata = async ({
 	params,
 }: DetailProps): Promise<Metadata | undefined> => {
-	const detail = await getMovieDetail(params.id);
+	const data = await getMovieDetail(params.id);
 
-	if (!detail) {
+	if (!data.success) {
 		return;
 	}
 
-	const { title, overview } = detail;
+	const { title, overview } = data;
 
 	return {
 		title,
@@ -31,7 +33,11 @@ export const generateMetadata = async ({
 };
 
 export default async function Detail({ params }: DetailProps) {
-	const detail = await getMovieDetail(params.id);
+	const data = await getMovieDetail(params.id);
+
+	if (!data.success) {
+		return notFound();
+	}
 
 	const {
 		poster_path,
@@ -42,7 +48,7 @@ export default async function Detail({ params }: DetailProps) {
 		overview,
 		genres,
 		credits = {},
-	} = detail;
+	} = data;
 
 	const director = (credits as Credits).crew.find(
 		(crew) => crew.job === 'Director',
@@ -53,7 +59,7 @@ export default async function Detail({ params }: DetailProps) {
 		.slice(0, 5);
 
 	return (
-		<>
+		<main className='mx-auto max-w-[90rem] p-4 pt-8'>
 			<div className='flex flex-col gap-4 md:flex-row'>
 				<div className='flex-1'>
 					<Image
@@ -66,7 +72,11 @@ export default async function Detail({ params }: DetailProps) {
 				</div>
 
 				<div className='flex-1'>
-					<h1 className='mb-2 text-3xl font-bold'>{title}</h1>
+					<div className='flex items-center gap-2'>
+						<h1 className='mb-2 text-3xl font-bold'>{title}</h1>
+
+						<WatchlistButton data={data} />
+					</div>
 					<p className='mb-4 text-muted-foreground'>
 						{release_date} • {runtime} minutes
 					</p>
@@ -109,6 +119,6 @@ export default async function Detail({ params }: DetailProps) {
 					</div>
 				</div>
 			</div>
-		</>
+		</main>
 	);
 }
