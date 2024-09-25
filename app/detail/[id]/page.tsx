@@ -1,8 +1,8 @@
 import { type Metadata } from 'next';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { getMovieDetail } from '@/actions/movie';
+import BlurImage from '@/components/blur-image';
 import WatchlistButton from '@/components/watchlist-button';
 import type { Credits, Genre } from '@/types/movie';
 
@@ -62,8 +62,12 @@ export default async function Detail({ params }: DetailProps) {
 		<main className='mx-auto max-w-[90rem] p-4 pt-8'>
 			<div className='flex flex-col gap-4 md:flex-row'>
 				<div className='flex-1'>
-					<Image
-						src={`https://image.tmdb.org/t/p/original/${poster_path}`}
+					<BlurImage
+						src={
+							poster_path
+								? `https://image.tmdb.org/t/p/original/${poster_path}`
+								: '/images/img-placeholder.jpg'
+						}
 						alt={title || ''}
 						width={400}
 						height={500}

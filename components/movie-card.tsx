@@ -1,13 +1,12 @@
 'use client';
 
 import { Star } from 'lucide-react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { cn } from '@/lib/utils';
 import { type Movie } from '@/types/movie';
 
+import BlurImage from './blur-image';
 import WatchlistButton from './watchlist-button';
 
 interface MovieCardProps {
@@ -28,16 +27,16 @@ export default function MovieCard({ movie }: MovieCardProps) {
 			className='group relative cursor-pointer'
 			onClick={handleNavigate}
 		>
-			<Image
-				src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`}
+			<BlurImage
+				src={
+					movie.poster_path
+						? `https://image.tmdb.org/t/p/original/${movie.poster_path}`
+						: '/images/img-placeholder.jpg'
+				}
 				alt={movie.title}
 				width={300}
 				height={400}
-				priority
-				className={cn('w-full rounded-sm transition-all', {
-					'blur-md': isLoading,
-				})}
-				onLoad={() => setIsLoading(false)}
+				className='w-full rounded-sm'
 			/>
 
 			<WatchlistButton
