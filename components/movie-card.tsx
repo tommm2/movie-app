@@ -36,12 +36,12 @@ export default function MovieCard({ movie }: MovieCardProps) {
 				alt={movie.title}
 				width={300}
 				height={400}
-				className='w-full rounded-sm'
+				imageClassName='w-full'
 			/>
 
 			<WatchlistButton
 				className='absolute right-2 top-2'
-				data={movie}
+				movie={movie}
 			/>
 
 			<div className='mt-2 flex items-center justify-between'>

@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
@@ -54,73 +55,69 @@ export default async function Detail({ params }: DetailProps) {
 		(crew) => crew.job === 'Director',
 	);
 
-	const topFivePopularCast = (credits as Credits).cast
+	const casts = (credits as Credits).cast
 		.sort((a, b) => b.popularity - a.popularity)
 		.slice(0, 5);
 
+	const genresTexts = genres.map(({ name }: Genre) => name).join(', ');
+
 	return (
 		<main className='mx-auto max-w-[90rem] p-4 pt-8'>
-			<div className='flex flex-col gap-4 md:flex-row'>
-				<div className='flex-1'>
-					<BlurImage
-						src={
-							poster_path
-								? `https://image.tmdb.org/t/p/original/${poster_path}`
-								: '/images/img-placeholder.jpg'
-						}
-						alt={title || ''}
-						width={400}
-						height={500}
-						className='w-auto rounded-lg object-cover shadow-lg'
-					/>
-				</div>
+			<div className='flex flex-col gap-10 md:flex-row'>
+				<BlurImage
+					src={
+						poster_path
+							? `https://image.tmdb.org/t/p/original/${poster_path}`
+							: '/images/img-placeholder.jpg'
+					}
+					alt={title || ''}
+					width={300}
+					height={450}
+					className='h-[450px] shrink-0'
+					imageClassName='w-auto rounded-lg object-cover shadow-lg h-full'
+				/>
 
-				<div className='flex-1'>
-					<div className='flex items-center gap-2'>
-						<h1 className='mb-2 text-3xl font-bold'>{title}</h1>
-
-						<WatchlistButton data={data} />
-					</div>
-					<p className='mb-4 text-muted-foreground'>
-						{release_date} • {runtime} minutes
-					</p>
-
-					<div className='mb-4 flex items-center'>
-						<span className='text-xl font-bold text-yellow-400'>
-							{vote_average.toFixed(1)}
-						</span>
-						<span className='ml-2 text-muted-foreground'>/ 10</span>
-					</div>
-
-					<p className='mb-4 text-lg text-muted-foreground'>{overview}</p>
-
-					<div className='mb-4'>
-						<h2 className='mb-2 text-xl font-semibold'>Director</h2>
-						<p>{director?.name}</p>
-					</div>
-
-					<div className='mb-4'>
-						<h2 className='mb-2 text-xl font-semibold'>Genres</h2>
-						<div className='flex flex-wrap gap-2'>
-							{genres.map((genre: Genre) => (
-								<span
-									key={genre.id}
-									className='rounded-full bg-secondary px-3 py-1 text-sm text-foreground'
-								>
-									{genre.name}
+				<div>
+					<div className='mb-2 flex gap-8'>
+						<h2 className='text-3xl font-bold'>{title}</h2>
+						<div className='flex items-center gap-4'>
+							<div className='flex'>
+								<span className='flex items-center gap-2 text-[#facc15]'>
+									<Star className='size-5' /> {vote_average.toFixed(1)}
 								</span>
-							))}
+								/ 10
+							</div>
 						</div>
 					</div>
 
-					<div>
-						<h2 className='mb-2 text-xl font-semibold'>Cast</h2>
-						<ul className='list-inside list-disc'>
-							{topFivePopularCast.map((actor) => (
-								<li key={actor.id}>{actor.name}</li>
-							))}
-						</ul>
-					</div>
+					<p className='mb-4 text-muted-foreground'>
+						{release_date} • {genresTexts} • {runtime} minutes
+					</p>
+
+					<WatchlistButton
+						className='mb-10 flex w-fit items-center gap-2'
+						movie={data}
+					>
+						Watchlist
+					</WatchlistButton>
+
+					<h3 className='text-2xl font-bold'>Overview</h3>
+					<p className='mb-10 text-muted-foreground'>{overview}</p>
+
+					<h3 className='text-2xl font-bold'>Director</h3>
+					<p className='mb-10 text-muted-foreground'>{director?.name}</p>
+
+					<h3 className='text-2xl font-bold'>Casts</h3>
+					<ul className='flex flex-wrap gap-4'>
+						{casts.map((cast) => (
+							<li
+								key={cast.id}
+								className='text-muted-foreground'
+							>
+								{cast?.name}
+							</li>
+						))}
+					</ul>
 				</div>
 			</div>
 		</main>

@@ -11,17 +11,22 @@ import { cn } from '@/lib/utils';
 import { type Movie } from '@/types/movie';
 
 interface MovieCardProps {
-	data: Movie;
+	movie: Movie;
 	className?: string;
+	children?: React.ReactNode;
 }
 
-export default function WatchlistButton({ data, className }: MovieCardProps) {
+export default function WatchlistButton({
+	movie,
+	className,
+	children,
+}: MovieCardProps) {
 	const { user } = useAuth();
 	const { toast } = useToast();
 
 	const [isInWatchlist, setIsInWatchlist] = useState(false);
 
-	const { id: movieId, title } = data;
+	const { id: movieId, title } = movie;
 
 	const checkIfInWatchlist = useCallback(async () => {
 		const docRef = doc(
@@ -39,7 +44,7 @@ export default function WatchlistButton({ data, className }: MovieCardProps) {
 	const addToWatchlist = async () => {
 		await setDoc(
 			doc(db, 'users', user?.uid as string, 'watchlist', movieId.toString()),
-			data,
+			movie,
 		);
 	};
 
@@ -63,7 +68,6 @@ export default function WatchlistButton({ data, className }: MovieCardProps) {
 		if (await checkIfInWatchlist()) {
 			await removeFromWatchlist();
 			setIsInWatchlist(false);
-
 		} else {
 			await addToWatchlist();
 			setIsInWatchlist(true);
@@ -72,7 +76,8 @@ export default function WatchlistButton({ data, className }: MovieCardProps) {
 		toast({
 			description: (
 				<div>
-					<span className='font-bold'>{title}</span> was {isInWatchlist ? 'Removed from' : 'Added to'} your watchlist list.
+					<span className='font-bold'>{title}</span> was{' '}
+					{isInWatchlist ? 'Removed from' : 'Added to'} your watchlist list.
 				</div>
 			),
 		});
@@ -94,10 +99,11 @@ export default function WatchlistButton({ data, className }: MovieCardProps) {
 
 	return (
 		<div
-			className={cn('rounded-sm bg-secondary p-2', className)}
+			className={cn('rounded-sm cursor-pointer bg-secondary p-2', className)}
 			onClick={handleUpdateWatchlist}
 		>
 			<Bookmark className={cn('size-5', { 'fill-primary': isInWatchlist })} />
+			{children}
 		</div>
 	);
 }
