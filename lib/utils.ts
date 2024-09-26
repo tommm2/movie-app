@@ -41,3 +41,7 @@ export function getUniqueMovies(prevMovies: Movie[], newMovies: Movie[]) {
 
 	return [...prevMovies, ...filteredMovies];
 }
+
+export function getRandomMovie(watchlist: Movie[]) {
+	return watchlist[Math.floor(Math.random() * watchlist.length)];
+}
