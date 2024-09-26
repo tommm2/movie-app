@@ -7,6 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs))
 }
 
+function convertStringToTimestamp(value: string) {
+	return new Date(value).getTime();
+}
+
 export function sortMovies({
 	orderBy,
 	sortBy,
@@ -19,9 +23,12 @@ export function sortMovies({
 	if (!orderBy) return data;
 
 	return data.sort((a: any, b: any) => {
+		const valueA = orderBy === 'release_date' ? convertStringToTimestamp(a[orderBy]) : a[orderBy];
+		const valueB = orderBy === 'release_date' ? convertStringToTimestamp(b[orderBy]) : b[orderBy];
+
 		return sortBy === 'desc'
-			? b[orderBy] - a[orderBy]
-			: a[orderBy] - b[orderBy];
+			? valueB - valueA
+			: valueA - valueB;
 	});
 }
 
