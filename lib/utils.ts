@@ -24,3 +24,13 @@ export function sortMovies({
 			: a[orderBy] - b[orderBy];
 	});
 }
+
+export function getUniqueMovies(prevMovies: Movie[], newMovies: Movie[]) {
+	const movieIdSet = new Set(prevMovies.map((movie) => movie.id));
+
+	const filteredMovies = newMovies.filter(
+		(movie: Movie) => !movieIdSet.has(movie.id),
+	);
+
+	return [...prevMovies, ...filteredMovies];
+}
