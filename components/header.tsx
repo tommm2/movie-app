@@ -16,9 +16,7 @@ export default function Header() {
 	const handleSignInWithGoogle = async () => {
 		const provider = new GoogleAuthProvider();
 
-		await signInWithPopup(auth, provider)
-			.then((res) => console.log(res))
-			.catch((err) => console.log(err));
+		await signInWithPopup(auth, provider);
 	};
 
 	const handleClickSignOut = async () => {
