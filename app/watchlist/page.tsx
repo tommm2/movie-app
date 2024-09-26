@@ -22,15 +22,14 @@ export default function Watchlist() {
 
 	useEffect(() => {
 		if (user) {
-			getDocs(collection(db, 'users', user.uid as string, 'watchlist')).then(
-				(querySnapshot) => {
+			getDocs(collection(db, 'users', user.uid as string, 'watchlist'))
+				.then((querySnapshot) => {
 					const data = querySnapshot.docs.map((doc) => ({
 						...doc.data(),
 					}));
 
 					setWatchlist(data as any);
-				},
-			);
+				});
 		}
 	}, [user]);
 
