@@ -11,9 +11,9 @@ export const getMovies = async (page = 1, limit = 10) => {
 
 		return results.slice(0, limit);
 	} catch (error) {
-		throw new Error(`An error happened: ${error}`)
+		throw new Error(`An error happened: ${error}`);
 	}
-}
+};
 
 export const getMovieDetail = async (id: number) => {
 	try {
@@ -24,9 +24,9 @@ export const getMovieDetail = async (id: number) => {
 
 		return data;
 	} catch (error) {
-		throw new Error(`An error happened: ${error}`)
+		throw new Error(`An error happened: ${error}`);
 	}
-}
+};
 
 export const getSearchMovies = async (query: string, page = 1) => {
 	try {
@@ -36,6 +36,6 @@ export const getSearchMovies = async (query: string, page = 1) => {
 
 		return results;
 	} catch (error) {
-		throw new Error(`An error happened: ${error}`)
+		throw new Error(`An error happened: ${error}`);
 	}
-}
+};
