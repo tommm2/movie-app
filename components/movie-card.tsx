@@ -37,7 +37,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 			/>
 
 			<WatchlistButton
-				className='absolute bottom-12 right-2'
+				className='absolute right-2 top-2'
 				movie={movie}
 			/>
 
