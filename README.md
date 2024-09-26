@@ -23,14 +23,14 @@ Movie App is an application that allows users to easily find and manage movies.
 ## Installation and Setup
 
 ```
-git clonehttps://github.com/tommm2/movie-app.git
+git clone https://github.com/tommm2/movie-app.git
 cd movie-app
 npm install
 ```
 
 
 Set up environment variables:
-Create a `.env.local` file and add the necessary Firebase configuration information and your TMDB API key:
+Create a `.env` file and add the necessary Firebase configuration information and your TMDB API key:
 
 ```
 # this should not be exposed to browser
