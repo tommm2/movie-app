@@ -43,7 +43,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
 			<div className='absolute left-2 top-2 flex items-center gap-2 rounded-md bg-secondary p-1 text-sm'>
 				<Calendar className='size-4' />
-				<p>{movie.release_date}</p>
+				<p>{movie.release_date || 'unknown'}</p>
 			</div>
 
 			<div className='mt-2 flex items-center justify-between'>
