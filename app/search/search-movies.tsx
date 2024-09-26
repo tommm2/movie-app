@@ -1,47 +1,43 @@
 'use client';
 
 import { Loader2 } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useInView } from 'react-intersection-observer';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getSearchMovies } from '@/actions/movie';
 import MovieCard from '@/components/movie-card';
 import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
+import { useIntersection } from '@/hooks/use-intersection';
 import { type Movie } from '@/types/movie';
 
 export default function SearchMovies() {
-	const { ref, inView } = useInView();
+	const { ref, isIntersecting } = useIntersection();
 
 	const [query, setQuery] = useState('');
 	const [movies, setMovies] = useState<Movie[]>([]);
-	const [page, setPage] = useState(1);
 	const [isLoading, setIsLoading] = useState(false);
+	const [page, setPage] = useState(1);
 
-	const loadMovies = async (reset: boolean = false) => {
-		if (isLoading || query === '') return;
-
+	const loadMore = useCallback(async () => {
 		setIsLoading(true);
 
-		const currentPage = reset ? 1 : page;
-		const results = await getSearchMovies(query, currentPage);
+		const data = await getSearchMovies(query, page);
 
-		setMovies((prevMovies) => (reset ? results : [...prevMovies, ...results]));
-		setPage((prevPage) => (reset ? 2 : prevPage + 1));
-		setIsLoading(false);
-	};
+		setMovies((prevMovies) => {
+			const movieIdSet = new Set(prevMovies.map((movie) => movie.id));
+			const filteredNewMovies = data.filter(
+				(movie: Movie) => !movieIdSet.has(movie.id),
+			);
+
+			return [...prevMovies, ...filteredNewMovies];
+		});
+		setPage((prevPage) => prevPage + 1);
+	}, [query, page]);
 
 	useEffect(() => {
-		if (query) {
-			loadMovies(true);
+		if (isIntersecting && query) {
+			loadMore();
 		}
-	}, [query]);
-
-	useEffect(() => {
-		if (inView && !isLoading) {
-			loadMovies();
-		}
-	}, [inView]);
+	}, [isIntersecting, loadMore, query]);
 
 	return (
 		<>
@@ -64,19 +60,17 @@ export default function SearchMovies() {
 				</div>
 			)}
 
-			{query && movies.length === 0 && (
+			{!isLoading && query && movies.length === 0 && (
 				<p className='text-center'>Search not found</p>
 			)}
 
-			<div className='flex w-full justify-center'>
-				<Loader2
-					ref={ref}
-					className={cn(
-						'size-8 animate-spin',
-						isLoading ? 'opacity-100' : 'opacity-0',
-					)}
-				/>
+			<div
+				ref={ref}
+				className='flex w-full justify-center'
+			>
+				{isLoading && <Loader2 className='size-8 animate-spin' />}
 			</div>
+
 		</>
 	);
 }
