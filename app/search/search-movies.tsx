@@ -87,7 +87,7 @@ export default function SearchMovies() {
 				</div>
 			)}
 
-			{!isLoading && query && movies.length === 0 && (
+			{!isLoading && hasSearched && movies.length === 0 && (
 				<p className='text-center'>Search not found</p>
 			)}
 
