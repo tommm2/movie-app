@@ -30,7 +30,6 @@ export default function Movies() {
 					setPage((prevPage) => prevPage + 1);
 					setIsLoading(false);
 				})
-				.catch((error) => console.error(error))
 				.finally(() => setIsLoading(false));
 		}
 	}, [isIntersecting, page]);
