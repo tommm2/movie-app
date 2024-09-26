@@ -73,33 +73,34 @@ export default async function Detail({ params }: DetailProps) {
 					alt={title || ''}
 					width={300}
 					height={450}
-					className='h-[450px] shrink-0'
-					imageClassName='w-auto rounded-lg object-cover shadow-lg h-full'
+					className='h-full shrink-0 sm:h-[450px]'
+					imageClassName='w-full sm:w-auto rounded-lg object-cover shadow-lg h-full'
 				/>
 
 				<div>
-					<div className='mb-2 flex gap-8'>
-						<h2 className='text-3xl font-bold'>{title}</h2>
-						<div className='flex items-center gap-4'>
-							<div className='flex'>
-								<span className='flex items-center gap-2 text-[#facc15]'>
-									<Star className='size-5' /> {vote_average.toFixed(1)}
-								</span>
-								/ 10
-							</div>
-						</div>
-					</div>
+					<h2 className='text-3xl font-bold'>{title}</h2>
 
 					<p className='mb-4 text-muted-foreground'>
 						{release_date} • {genresTexts} • {runtime} minutes
 					</p>
 
-					<WatchlistButton
-						className='mb-10 flex w-fit items-center gap-2'
-						movie={data}
-					>
-						Watchlist
-					</WatchlistButton>
+					<div className='mb-10 flex items-center gap-4'>
+						<WatchlistButton
+							className='flex w-fit'
+							movie={data}
+						>
+							Watchlist
+						</WatchlistButton>
+						<div className='flex items-center gap-2'>
+							<Star className='size-5 text-[#facc15]' />
+							<div className='flex'>
+								<span className='text-[#facc15]'>
+									{vote_average.toFixed(1)}
+								</span>
+								/ 10
+							</div>
+						</div>
+					</div>
 
 					<h3 className='text-2xl font-bold'>Overview</h3>
 					<p className='mb-10 text-muted-foreground'>{overview}</p>
@@ -108,7 +109,7 @@ export default async function Detail({ params }: DetailProps) {
 					<p className='mb-10 text-muted-foreground'>{director?.name}</p>
 
 					<h3 className='text-2xl font-bold'>Casts</h3>
-					<ul className='flex flex-wrap gap-4'>
+					<ul className='flex flex-col gap-3 sm:flex-row'>
 						{casts.map((cast) => (
 							<li
 								key={cast.id}
