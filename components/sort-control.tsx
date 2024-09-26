@@ -11,6 +11,8 @@ import {
 import { cn } from '@/lib/utils';
 import type { OrderBy, SortBy, SortOption } from '@/types/sort';
 
+import { Button } from './ui/button';
+
 const defaultSortsOptions: SortOption[] = [
 	{ label: 'popularity', value: 'popularity' },
 	{ label: 'vote average', value: 'vote_average' },
@@ -18,6 +20,7 @@ const defaultSortsOptions: SortOption[] = [
 ];
 
 interface SortControlProps {
+	className?: string;
 	sortsOptions?: SortOption[];
 	orderBy: OrderBy;
 	onOrderBy: (value: OrderBy) => void;
@@ -26,6 +29,7 @@ interface SortControlProps {
 }
 
 export default function SortControl({
+	className,
 	sortsOptions = defaultSortsOptions,
 	orderBy,
 	onOrderBy,
@@ -35,14 +39,20 @@ export default function SortControl({
 	return (
 		<div className='mb-4 flex items-center justify-end gap-4'>
 			{orderBy && (
-				<ArrowUp
-					className={cn('cursor-pointer', sortBy === 'desc' && 'rotate-180')}
-					onClick={() => onSortBy(sortBy === 'desc' ? 'asc' : 'desc')}
-				/>
+				<Button
+					size='icon'
+					variant='outline'
+					className='px-2'
+				>
+					<ArrowUp
+						className={cn('size-4', sortBy === 'desc' && 'rotate-180')}
+						onClick={() => onSortBy(sortBy === 'desc' ? 'asc' : 'desc')}
+					/>
+				</Button>
 			)}
 
 			<Select onValueChange={onOrderBy}>
-				<SelectTrigger className='w-[180px]'>
+				<SelectTrigger className={cn('w-[180px]', className)}>
 					<SelectValue placeholder='Order by' />
 				</SelectTrigger>
 				<SelectContent>
