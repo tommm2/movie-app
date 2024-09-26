@@ -9,9 +9,16 @@ import {
 	SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-import type { OrderBy, SortBy } from '@/types/sort';
+import type { OrderBy, SortBy, SortOption } from '@/types/sort';
+
+const defaultSortsOptions: SortOption[] = [
+	{ label: 'popularity', value: 'popularity' },
+	{ label: 'vote average', value: 'vote_average' },
+	{ label: 'release date', value: 'release_date' },
+];
 
 interface SortControlProps {
+	sortsOptions?: SortOption[];
 	orderBy: OrderBy;
 	onOrderBy: (value: OrderBy) => void;
 	sortBy: SortBy;
@@ -19,6 +26,7 @@ interface SortControlProps {
 }
 
 export default function SortControl({
+	sortsOptions = defaultSortsOptions,
 	orderBy,
 	onOrderBy,
 	sortBy,
@@ -38,9 +46,14 @@ export default function SortControl({
 					<SelectValue placeholder='Order by' />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value='popularity'>popularity</SelectItem>
-					<SelectItem value='vote_average'>vote average</SelectItem>
-					{/* <SelectItem value='release_date'>上映日期</SelectItem> */}
+					{sortsOptions.map((option) => (
+						<SelectItem
+							key={option.value}
+							value={option.value}
+						>
+							{option.label}
+						</SelectItem>
+					))}
 				</SelectContent>
 			</Select>
 		</div>
