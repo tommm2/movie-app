@@ -27,35 +27,35 @@ export default function SearchMovies() {
 	const sortedMovies = sortMovies({ orderBy, sortBy, data: movies });
 
 	const fetchMovies = (searchPage: number, isNewSearch: boolean) => {
-    setIsLoading(true);
+		setIsLoading(true);
 
-    if (isNewSearch) {
-      setHasSearched(true);
-      setPage(1);
-      setMovies([]);
-    }
+		if (isNewSearch) {
+			setHasSearched(true);
+			setPage(1);
+			setMovies([]);
+		}
 
-    getSearchMovies(query, searchPage)
-      .then((data) => {
-        setMovies((prevMovies) => isNewSearch ? data : getUniqueMovies(prevMovies, data));
-        setPage(searchPage);
-      })
-      .finally(() => setIsLoading(false));
-  };
+		getSearchMovies(query, searchPage)
+			.then((data) => {
+				setMovies((prevMovies) => isNewSearch ? data : getUniqueMovies(prevMovies, data));
+				setPage(searchPage);
+			})
+			.finally(() => setIsLoading(false));
+	};
 
 	const handleSearch = () => fetchMovies(1, true);
 
 	const loadMore = () => {
-    if (isLoading || !hasSearched) return;
+		if (isLoading || !hasSearched) return;
 
-    fetchMovies(page + 1, false);
-  };
+		fetchMovies(page + 1, false);
+	};
 
 	useEffect(() => {
-    if (isIntersecting && hasSearched) {
-      loadMore();
-    }
-  }, [isIntersecting, hasSearched]);
+		if (isIntersecting && hasSearched) {
+			loadMore();
+		}
+	}, [isIntersecting, hasSearched]);
 
 	return (
 		<>

@@ -1,4 +1,4 @@
-import SearchMovies from "./search-movies";
+import SearchMovies from './search-movies';
 
 export default function Search() {
 	return (

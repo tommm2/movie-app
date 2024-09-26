@@ -1,10 +1,10 @@
-import { Movie } from "@/types/movie";
-import type { OrderBy, SortBy } from "@/types/sort";
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
+import { Movie } from '@/types/movie';
+import type { OrderBy, SortBy } from '@/types/sort';
+import { clsx, type ClassValue } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs))
+	return twMerge(clsx(inputs));
 }
 
 function convertStringToTimestamp(value: string) {
