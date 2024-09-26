@@ -1,8 +1,7 @@
 'use client';
 
-import { Star } from 'lucide-react';
+import { Calendar, Star } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 import { type Movie } from '@/types/movie';
 
@@ -15,8 +14,6 @@ interface MovieCardProps {
 
 export default function MovieCard({ movie }: MovieCardProps) {
 	const router = useRouter();
-
-	const [isLoading, setIsLoading] = useState(true);
 
 	const handleNavigate = () => {
 		router.push(`/detail/${movie.id}`);
@@ -40,9 +37,14 @@ export default function MovieCard({ movie }: MovieCardProps) {
 			/>
 
 			<WatchlistButton
-				className='absolute right-2 top-2'
+				className='absolute bottom-12 right-2'
 				movie={movie}
 			/>
+
+			<div className='absolute left-2 top-2 flex items-center gap-2 rounded-md bg-secondary p-1 text-sm'>
+				<Calendar className='size-4' />
+				<p>{movie.release_date}</p>
+			</div>
 
 			<div className='mt-2 flex items-center justify-between'>
 				<h2 className='line-clamp-1 w-full text-xl font-bold'>{movie.title}</h2>
@@ -50,7 +52,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 				<div className='flex flex-row items-center gap-2'>
 					<Star className='text-[#FFAD49]' />
 					<p className='font-bold text-[#FFAD49]'>
-						{movie.vote_average ? movie.vote_average.toFixed(1) : ''}
+						{movie.vote_average.toFixed(1)}
 					</p>
 				</div>
 			</div>
