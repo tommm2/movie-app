@@ -20,6 +20,8 @@ export default function Movies() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [page, setPage] = useState(1);
 
+	const sortedMovies = sortMovies({ orderBy, sortBy, data: movies });
+
 	useEffect(() => {
 		if (isIntersecting) {
 			setIsLoading(true);
@@ -34,9 +36,6 @@ export default function Movies() {
 		}
 	}, [isIntersecting, page]);
 
-	const sortedMovies = useMemo(() => {
-		return sortMovies({ orderBy, sortBy, data: movies });
-	}, [orderBy, sortBy, movies]);
 
 	return (
 		<>
