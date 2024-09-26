@@ -7,35 +7,31 @@ import { getMovies } from '@/actions/movie';
 import MovieCard from '@/components/movie-card';
 import SortControl from '@/components/sort-control';
 import { useIntersection } from '@/hooks/use-intersection';
-import { sortMovies } from '@/lib/utils';
+import { getUniqueMovies, sortMovies } from '@/lib/utils';
 import { type Movie } from '@/types/movie';
 import type { OrderBy, SortBy } from '@/types/sort';
 
-interface MoviesProps {
-	initialMovies: Movie[];
-}
-
-export default function Movies({ initialMovies }: MoviesProps) {
+export default function Movies() {
 	const { ref, isIntersecting } = useIntersection();
 
-	const [movies, setMovies] = useState(initialMovies);
+	const [movies, setMovies] = useState<Movie[]>([]);
 	const [orderBy, setOrderBy] = useState<OrderBy>('');
 	const [sortBy, setSortBy] = useState<SortBy>('desc');
-	const [page, setPage] = useState(2);
+	const [isLoading, setIsLoading] = useState(false);
+	const [page, setPage] = useState(1);
 
 	useEffect(() => {
 		if (isIntersecting) {
-			getMovies(page).then((data) => {
-				setMovies((prevMovies) => {
-					const movieIdSet = new Set(prevMovies.map((movie) => movie.id));
-					const filteredNewMovies = data.filter(
-						(movie: Movie) => !movieIdSet.has(movie.id),
-					);
+			setIsLoading(true);
 
-					return [...prevMovies, ...filteredNewMovies];
-				});
-				setPage((prevPage) => prevPage + 1);
-			});
+			getMovies(page)
+				.then((data) => {
+					setMovies((prev) => getUniqueMovies(prev, data));
+					setPage((prevPage) => prevPage + 1);
+					setIsLoading(false);
+				})
+				.catch((error) => console.error(error))
+				.finally(() => setIsLoading(false));
 		}
 	}, [isIntersecting, page]);
 
@@ -65,9 +61,9 @@ export default function Movies({ initialMovies }: MoviesProps) {
 
 			<div
 				ref={ref}
-				className='flex w-full justify-center'
+				className='flex w-full justify-center py-4'
 			>
-				<Loader2 className='size-8 animate-spin' />
+				{isLoading && <Loader2 className='size-8 animate-spin' />}
 			</div>
 		</>
 	);
