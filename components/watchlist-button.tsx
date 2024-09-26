@@ -99,7 +99,7 @@ export default function WatchlistButton({
 
 	return (
 		<div
-			className={cn('rounded-sm cursor-pointer bg-secondary p-2', className)}
+			className={cn('rounded-sm cursor-pointer bg-secondary flex items-center gap-1 p-2', className)}
 			onClick={handleUpdateWatchlist}
 		>
 			<Bookmark className={cn('size-5', { 'fill-primary': isInWatchlist })} />
