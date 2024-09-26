@@ -16,7 +16,7 @@ Movie App is an application that allows users to easily find and manage movies.
 ## Tech Stack
 - [Next.js](https://nextjs.org/): React framework for building user interfaces
 - [Tailwind CSS](https://tailwindcss.com/): Utility-first CSS framework for rapid design and development
-- [Shadcn/ui](https://ui.shadcn.com/)
+- [Shadcn/ui](https://ui.shadcn.com/): Beautifully designed components that you can copy and paste into your apps
 - [Firebase](https://firebase.google.com/): For backend services, including authentication and watchlist
 - [The Movie Database (TMDB)](https://www.themoviedb.org/): For fetching movie data and information
 
